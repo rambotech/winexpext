@@ -14,14 +14,14 @@ namespace winexpext   // Windows Explorer Extension
                 {
                     if (args.Length != 2) ShowHelp("timestampRename requires a filename");
                     if (! File.Exists(args[1])) ShowHelp("timestampRename requires an existing file");
-                    TimestampedCopyOrRename(args[0], false);
+                    TimestampedCopyOrRename(args[1], false);
                     System.Environment.Exit(1);
                 }
                 if (args[0] == "timestampCopy")
                 {
                     if (args.Length != 2) ShowHelp("timestampCopy requires a filename");
                     if (! File.Exists(args[1])) ShowHelp("timestampCopy requires an existing file");
-                    TimestampedCopyOrRename(args[0], true);
+                    TimestampedCopyOrRename(args[1], true);
                     System.Environment.Exit(1);
                 }
                 ShowHelp($"Unknown function: {args[0]}");
@@ -49,12 +49,10 @@ namespace winexpext   // Windows Explorer Extension
 
         static void TimestampedCopyOrRename(string filename, bool isCopy)
         {
-            var datetimePortion = File.GetLastWriteTime(filename).ToString("-yyyyMMdd-HHnnss");
+            var datetimePortion = File.GetLastWriteTime(filename).ToString("-yyyyMMdd-HHmmss");
             var newFileName = Path.Combine(
                 Path.GetDirectoryName(filename), 
-                Path.GetFileNameWithoutExtension(filename),
-                datetimePortion,
-                Path.GetExtension(filename)
+                Path.GetFileNameWithoutExtension(filename) + datetimePortion + Path.GetExtension(filename)
             );
             if (isCopy)
             {

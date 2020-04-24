@@ -15,7 +15,7 @@ To install the extensions in Windows Explorer:
 
 - Change the current directory to the folder with the code
 
-- Execute: ```dotnet publish -c release -o c:\apps\winextexp -r win10-x64```
+- Execute: ```dotnet publish -c release -o c:\apps\winexpext -r win10-x64```
 
 ### Add the extensions to Windows Explorer
 

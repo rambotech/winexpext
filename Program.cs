@@ -49,7 +49,7 @@ namespace winexpext   // Windows Explorer Extension
 
         static void TimestampedCopyOrRename(string filename, bool isCopy)
         {
-            var datetimePortion = DateTime.Now.ToString("-yyyyMMdd-HHnnss");
+            var datetimePortion = File.GetLastWriteTime(filename).ToString("-yyyyMMdd-HHnnss");
             var newFileName = Path.Combine(
                 Path.GetDirectoryName(filename), 
                 Path.GetFileNameWithoutExtension(filename),

@@ -1,5 +1,8 @@
 # winexpext
-A collection of Microsoft Windows Explorer file and folder context-menu extensions. Requires .NET Core 3.0 installed to build the binaries.
+A collection of Microsoft Windows Explorer file and folder context-menu extensions.
+
+- Requires .NET Core 3.0 installed to build the binaries.
+- Designed using Visual Studio Code.
 
 To install the extensions in Windows Explorer:
 

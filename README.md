@@ -30,8 +30,8 @@ To install the extensions in Windows Explorer:
 
 - Open windows explorer and select a file (not a folder), and right click on a file.  There will be new items in the context menu for the following:
 
-    - **Timestamped Copy**: create a copy of a file, and suffixes the root name with a formated timestamp.  This is useful for a snapshot in time of the file's contents, also known as generational clones.
-    - **Timestamped Rename**: same as *Timestamped Copy* above, but does a rename instead.
+    - **Timestamped Copy**: create a copy of a file, and suffixes the root name with a formated timestamp of the last updated time.  This is useful for a snapshot in time of the file's contents, also known as generational clones.  Multiple files can be selected.
+    - **Timestamped Rename**: same as *Timestamped Copy* above, but does a rename instead.  Multiple files can also be selected.
 
 
 

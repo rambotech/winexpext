@@ -22,6 +22,10 @@ To install the extensions in Windows Explorer:
 - Open Windows Explorer and navigate the folder with the code
 - Double-click the file add_winexpext.reg, and import it into the Windows Registry.
 
+### Optional cleanup
+
+- Remove the folder from the zip file or the ``` git clone ``` action, if you don't plan to add any new functions yourself.
+
 ### To use it
 
 - Open windows explorer and select a file (not a folder), and right click on a file.  There will be new items in the context menu for the following:

@@ -54,6 +54,7 @@ namespace winexpext   // Windows Explorer Extension
                 Path.GetDirectoryName(filename), 
                 Path.GetFileNameWithoutExtension(filename) + datetimePortion + Path.GetExtension(filename)
             );
+            Console.WriteLine($"{filename} --> {newFileName}");
             if (isCopy)
             {
                 File.Copy(filename, newFileName);

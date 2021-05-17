@@ -30,6 +30,8 @@ namespace winexpext   // Windows Explorer Extension
             catch (Exception err)
             {
                 Console.WriteLine (err.Message);
+                Console.WriteLine ("Press any key to clear...");
+                Console.ReadLine();
                 System.Environment.Exit(3);
             }
         }

@@ -2,8 +2,8 @@ language: csharp
 mono: none
 dotnet: 5.0.2
 script:
-- chmod +x ./deploy.sh 
-- ./deploy.sh
+- chmod +x ./buildsteps.sh 
+- ./buildsteps.sh
 
 # safelist
 branches:

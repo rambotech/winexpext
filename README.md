@@ -1,3 +1,9 @@
+| *branch* | state |
+| :--- | :--- |
+| master | [![Build status](https://api.travis-ci.com/rambotech/winexpext.svg?branch=master)](https://travis-ci.com/rambotech/winexpext) |
+| release | [![Build status](https://api.travis-ci.com/rambotech/winexpext.svg?branch=release)](https://travis-ci.com/rambotech/winexpext) |
+| develop | [![Build status](https://api.travis-ci.com/rambotech/winexpext.svg?branch=develop)](https://travis-ci.com/rambotech/winexpext) |
+
 # winexpext
 A collection of Microsoft Windows Explorer file and folder context-menu extensions.
 
@@ -32,8 +38,3 @@ To install the extensions in Windows Explorer:
 
     - **Timestamped Copy**: create a copy of a file, and suffixes the root name with a formated timestamp of the last updated time.  This is useful for a snapshot in time of the file's contents, also known as generational clones.  Multiple files can be selected.
     - **Timestamped Rename**: same as *Timestamped Copy* above, but does a rename instead.  Multiple files can also be selected.
-
-
-
-
-

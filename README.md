@@ -40,3 +40,12 @@ If you don't plan to add any new functions or tweak the code for your needs:
     - **Timestamped Copy**: create a copy of a file, and suffixes the root name with a formated timestamp of the file's last modification timestamp.  This is useful for a snapshot in time of the file's content, also known as generational clones.  Multiple files can be selected.
     - **Timestamped Rename**: same as *Timestamped Copy* above, but does a rename instead.  Multiple files can also be selected.
 
+### Revision History
+
+06/23/2021 -- v1.1.0
+- Better exception handling and expandability.
+- Added Travis CI build stuff.
+
+2021-10-14 -- v 1.0.0
+- Original version
+

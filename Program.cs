@@ -5,33 +5,69 @@ namespace winexpext   // Windows Explorer Extension
 {
     class Program
     {
+        enum FileAction : int
+        {
+            timestampCopy,
+            timestampRename
+        }
+
         static void Main(string[] args)
         {
             try
             {
-                if (args.Length < 1) ShowHelp("Usage");
-                if (args[0] == "timestampRename")
+                if (args.Length < 2) ShowHelp("Usage");
+                FileAction action;
+                if (! Enum.TryParse<FileAction>(args[0], out action))
                 {
-                    if (args.Length != 2) ShowHelp("timestampRename requires a filename");
-                    if (! File.Exists(args[1])) ShowHelp("timestampRename requires an existing file");
-                    TimestampedCopyOrRename(args[1], false);
-                    System.Environment.Exit(1);
+                     ShowHelp($"Unrecognized command: {args[0]}");
                 }
-                if (args[0] == "timestampCopy")
+                Console.WriteLine ($"");
+                var pauseForOperatorMessage = false;
+                for (var index = 1; index < args.Length; index++)
                 {
-                    if (args.Length != 2) ShowHelp("timestampCopy requires a filename");
-                    if (! File.Exists(args[1])) ShowHelp("timestampCopy requires an existing file");
-                    TimestampedCopyOrRename(args[1], true);
-                    System.Environment.Exit(1);
+                    if (! File.Exists(args[index]))
+                    {
+                        Console.WriteLine($"file not found: {args[index]}");
+                        pauseForOperatorMessage = true;
+                        continue;
+                    }
+                    Console.Write($"    processing: {args[index]}: ");
+                    try
+                    {
+                        switch (action)
+                        {
+                            case FileAction.timestampRename:
+                                TimestampedCopyOrRename(args[index], false);
+                                Console.WriteLine("OK");
+                                break;
+                            case FileAction.timestampCopy:
+                                TimestampedCopyOrRename(args[index], true);
+                                Console.WriteLine("OK");
+                                break;
+                            default:
+                                Console.WriteLine($"No method for defined action \"{action}\"");
+                                break;
+                        }
+                    }
+                    catch (Exception err)
+                    {
+                        Console.WriteLine($"Action failed.  \"{err.Message}\"");
+                        pauseForOperatorMessage = true;
+                    }
                 }
-                ShowHelp($"Unknown function: {args[0]}");
-                System.Environment.Exit(2);
+                if (pauseForOperatorMessage)
+                {
+                    Console.WriteLine($"Completed, with one or more problems.. press any key to close.");
+                    Console.ReadKey();
+                }
+                System.Environment.Exit(pauseForOperatorMessage ? 1 : 0);
             }
             catch (Exception err)
             {
+                // Wait for user key press to clear any error
                 Console.WriteLine (err.Message);
                 Console.WriteLine ("Press any key to clear...");
-                Console.ReadLine();
+                Console.ReadKey();
                 System.Environment.Exit(3);
             }
         }
@@ -45,7 +81,8 @@ namespace winexpext   // Windows Explorer Extension
             }
             Console.WriteLine("winexpext command [options]");
             Console.WriteLine();
-            Console.WriteLine("timestampedCopy sourceFile");
+            Console.WriteLine("winexpext timestampedCopy sourceFile [sourceFile2 [...]]");
+            Console.WriteLine("winexpext timestampedRename sourceFile [sourceFile2 [...]]");
             System.Environment.Exit(2);
         }
 

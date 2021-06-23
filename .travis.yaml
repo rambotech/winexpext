@@ -1,0 +1,13 @@
+language: csharp
+mono: none
+dotnet: 5.0.2
+script:
+- chmod +x ./deploy.sh 
+- ./deploy.sh
+
+# safelist
+branches:
+  only:
+  - master
+  - release
+  - develop

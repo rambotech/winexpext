@@ -6,9 +6,9 @@ A collection of Microsoft Windows Explorer file and folder context-menu extensio
 
 | *branch* | state |
 | :--- | :--- |
-| master | [![Build status](https://api.travis-ci.com/rambotech/winexpext.svg?branch=master)](https://travis-ci.com/rambotech/winexpext) |
-| release | [![Build status](https://api.travis-ci.com/rambotech/winexpext.svg?branch=release)](https://travis-ci.com/rambotech/winexpext) |
-| develop | [![Build status](https://api.travis-ci.com/rambotech/winexpext.svg?branch=develop)](https://travis-ci.com/rambotech/winexpext) |
+| master | [![Build status](https://app.travis-ci.com/rambotech/winexpext.svg?branch=master)](https://app.travis-ci.com/rambotech/winexpext) |
+| release | [![Build status](https://app.travis-ci.com/rambotech/winexpext.svg?branch=release)](https://app.travis-ci.com/rambotech/winexpext) |
+| develop | [![Build status](https://app.travis-ci.com/rambotech/winexpext.svg?branch=develop)](https://app.travis-ci.com/rambotech/winexpext) |
 
 To install the extensions in Windows Explorer:
 

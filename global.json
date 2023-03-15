@@ -1,0 +1,14 @@
+{
+  "sdk": {
+    "version": "7.0.200"
+  },
+
+  "tools": {
+    "dotnet": "7.0.200"
+  },
+
+  "msbuild-sdks": {
+    "Microsoft.DotNet.Arcade.Sdk": "7.0.0-beta.22464.4",
+    "Microsoft.DotNet.Helix.Sdk": "7.0.0-beta.22464.4"
+  }
+}

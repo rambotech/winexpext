@@ -4,11 +4,11 @@ A collection of Microsoft Windows Explorer file and folder context-menu extensio
 - Requires .NET 5 installed to build the binaries.
 - Designed using Visual Studio Code.
 
-| *branch* | state |
-| :--- | :--- |
-| master | [![Build status](https://app.travis-ci.com/rambotech/winexpext.svg?branch=master)](https://app.travis-ci.com/rambotech/winexpext) |
-| release | [![Build status](https://app.travis-ci.com/rambotech/winexpext.svg?branch=release)](https://app.travis-ci.com/rambotech/winexpext) |
-| develop | [![Build status](https://app.travis-ci.com/rambotech/winexpext.svg?branch=develop)](https://app.travis-ci.com/rambotech/winexpext) |
+| *branch* | Currently |
+| :--- | :---: |
+| master | [![Build status](https://github.com/rambotech/winexpext/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/rambotech/UpwinexpextdateDDNS) |
+| release | [![Build status](https://github.com/rambotech/winexpext/actions/workflows/dotnet.yml/badge.svg?branch=develop)](https://github.com/rambotech/winexpext/tree/release) |
+| develop | [![Build status](https://github.com/rambotech/winexpext/actions/workflows/dotnet.yml/badge.svg?branch=develop)](https://github.com/rambotech/winexpext/tree/develop) |
 
 To install the extensions in Windows Explorer:
 

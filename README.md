@@ -42,7 +42,10 @@ If you don't plan to add any new functions or tweak the code for your needs:
 
 ### Revision History
 
-06/23/2021 -- v1.1.0
+2024-07-15 -- v1.2.0
+- Add hashing for MD5, SHA1, SHA256, SHA384 and SHA512
+
+2021-06-23 -- v1.1.0
 - Better exception handling and expandability.
 - Added Travis CI build stuff.
 

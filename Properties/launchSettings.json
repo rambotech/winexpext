@@ -1,0 +1,28 @@
+{
+  "profiles": {
+    "timestampCopy": {
+      "commandName": "Project",
+      "commandLineArgs": "timestampCopy .\\winexpext.exe"
+    },
+    "MD5": {
+      "commandName": "Project",
+      "commandLineArgs": "hashMD5 .\\winexpext.exe"
+    },
+    "SHA1": {
+      "commandName": "Project",
+      "commandLineArgs": "hashSHA1 .\\winexpext.exe"
+    },
+    "SHA256": {
+      "commandName": "Project",
+      "commandLineArgs": "hashSHA256 .\\winexpext.exe"
+    },
+    "SHA384": {
+      "commandName": "Project",
+      "commandLineArgs": "hashSHA384 .\\winexpext.exe"
+    },
+    "SHA512": {
+      "commandName": "Project",
+      "commandLineArgs": "hashSHA512 .\\winexpext.exe"
+    }
+  }
+}

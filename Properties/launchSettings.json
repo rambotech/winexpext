@@ -2,9 +2,25 @@
   "profiles": {
     "timestampCopy": {
       "commandName": "Project",
-      "commandLineArgs": "timestampCopy .\\winexpext.exe"
+      "commandLineArgs": "timestampCopy .\\test-copy.txt"
     },
-    "MD5": {
+    "timestampRename": {
+      "commandName": "Project",
+      "commandLineArgs": "timestampRename .\\test-rename.txt"
+    },
+    "dropAppendages_0": {
+      "commandName": "Project",
+      "commandLineArgs": "dropAppendages .\\test-backup.tar.gz"
+    },
+    "dropAppendages_1": {
+      "commandName": "Project",
+      "commandLineArgs": "dropAppendages .\\test-backup(1).tar.gz"
+    },
+    "dropAppendages_2": {
+      "commandName": "Project",
+      "commandLineArgs": "dropAppendages .\\test-backup(2).tar.gz"
+    },
+    "MD5": {b
       "commandName": "Project",
       "commandLineArgs": "hashMD5 .\\winexpext.exe"
     },

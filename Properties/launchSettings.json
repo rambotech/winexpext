@@ -20,7 +20,7 @@
       "commandName": "Project",
       "commandLineArgs": "dropAppendages .\\test-backup(2).tar.gz"
     },
-    "MD5": {b
+    "MD5": {
       "commandName": "Project",
       "commandLineArgs": "hashMD5 .\\winexpext.exe"
     },

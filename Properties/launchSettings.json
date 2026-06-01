@@ -1,44 +1,60 @@
 {
   "profiles": {
-    "timestampCopy": {
+    "Help (No Filename)": {
       "commandName": "Project",
-      "commandLineArgs": "timestampCopy .\\test-copy.txt"
+      "commandLineArgs": "demonstrate"
     },
-    "timestampRename": {
+    "Help (Missing File)": {
       "commandName": "Project",
-      "commandLineArgs": "timestampRename .\\test-rename.txt"
+      "commandLineArgs": "demonstrate %TEMP%\\winexpext.tests\\test.txt"
     },
-    "dropAppendages_0": {
+    "Demonstrate": {
       "commandName": "Project",
-      "commandLineArgs": "dropAppendages .\\test-backup.tar.gz"
+      "commandLineArgs": "demonstrate %TEMP%\\winexpext.tests\\test-copy.txt"
     },
-    "dropAppendages_1": {
+    "Demonstrate (Test)": {
       "commandName": "Project",
-      "commandLineArgs": "dropAppendages .\\test-backup(1).tar.gz"
+      "commandLineArgs": "demonstrate /test %TEMP%\\winexpext.tests\\test-copy.txt"
     },
-    "dropAppendages_2": {
+    "removeCopyMark (Test)": {
       "commandName": "Project",
-      "commandLineArgs": "dropAppendages .\\test-backup(2).tar.gz"
+      "commandLineArgs": "removeCopyMark /test \"%TEMP%\\winexpext.tests\\test-backup(1).tar - Copy.gz\""
+    },
+    "removeRenameMark (Test)": {
+      "commandName": "Project",
+      "commandLineArgs": "removeRenameMark /test %TEMP%\\winexpext.tests\\test-backup(1).tar.gz"
+    },
+    "removeTimestampedMark (Test)": {
+      "commandName": "Project",
+      "commandLineArgs": "removeTimestampedMark /test %TEMP%\\winexpext.tests\\test-copy.txt"
+    },
+    "timestampCopy (Test)": {
+      "commandName": "Project",
+      "commandLineArgs": "timestampCopy /test %TEMP%\\winexpext.tests\\test-copy.txt"
+    },
+    "timestampRename (Test)": {
+      "commandName": "Project",
+      "commandLineArgs": "timestampRename /test %TEMP%\\winexpext.tests\\test-rename.txt"
     },
     "MD5": {
       "commandName": "Project",
-      "commandLineArgs": "hashMD5 .\\winexpext.exe"
+      "commandLineArgs": "hashMD5 %TEMP%\\winexpext.tests\\winexpext.exe"
     },
     "SHA1": {
       "commandName": "Project",
-      "commandLineArgs": "hashSHA1 .\\winexpext.exe"
+      "commandLineArgs": "hashSHA1 %TEMP%\\winexpext.tests\\winexpext.exe"
     },
     "SHA256": {
       "commandName": "Project",
-      "commandLineArgs": "hashSHA256 .\\winexpext.exe"
+      "commandLineArgs": "hashSHA256 %TEMP%\\winexpext.tests\\winexpext.exe"
     },
     "SHA384": {
       "commandName": "Project",
-      "commandLineArgs": "hashSHA384 .\\winexpext.exe"
+      "commandLineArgs": "hashSHA384 %TEMP%\\winexpext.tests\\winexpext.exe"
     },
     "SHA512": {
       "commandName": "Project",
-      "commandLineArgs": "hashSHA512 .\\winexpext.exe"
+      "commandLineArgs": "hashSHA512 %TEMP%\\winexpext.tests\\winexpext.exe"
     }
   }
 }

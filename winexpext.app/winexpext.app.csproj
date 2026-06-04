@@ -11,4 +11,13 @@
 	  <ProjectReference Include="..\winexpext.lib\winexpext.lib.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="add_winexpext.reg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="del_winexpext.reg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>

@@ -1,12 +1,13 @@
 ﻿using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
-namespace winexpext.lib.Helpers
+namespace winexpext.lib
 {
     public class Methods
     {
         public enum HashingMethod : int
         {
+            NotSpecificed,
             MD5,
             SHA1,
             SHA256,
@@ -16,7 +17,6 @@ namespace winexpext.lib.Helpers
 
         public enum FileAction : int
         {
-            demonstrate,
             timestampCopy,
             timestampRename,
             removeCopyMark,
@@ -27,12 +27,6 @@ namespace winexpext.lib.Helpers
             hashSHA256,
             hashSHA384,
             hashSHA512
-        }
-
-        public enum TimestampingAction : int
-        {
-            Copy,
-            Rename
         }
 
         public static readonly FileAction[] FileActionTesting =
@@ -51,7 +45,8 @@ namespace winexpext.lib.Helpers
         public static string TimestampedSuffix(string fileName)
         {
             var datetimePortion = File.GetLastWriteTime(fileName).ToString("-yyyyMMdd-HHmmss");
-            return Path.Combine(
+
+			return Path.Combine(
                 Path.GetDirectoryName(fileName),
                 Path.GetFileNameWithoutExtension(fileName) + datetimePortion + Path.GetExtension(fileName)
             );
@@ -69,6 +64,11 @@ namespace winexpext.lib.Helpers
             var fileFixed = pathPortion + (fileIndex < 0
                 ? filePortion
                 : filePortion.Substring(0, fileIndex).Trim() + (filePortion + " ").Substring(fileIndex + remove.Length).Trim());
+
+            while (fileFixed.Length > 0 && fileFixed.EndsWith("."))
+            {
+				fileFixed = fileFixed.Substring(0, fileFixed.Length - 1);
+			}
 
             return fileFixed;
         }
@@ -91,7 +91,13 @@ namespace winexpext.lib.Helpers
                     ? filePortion
                     : filePortion.Substring(0, fileIndex).Trim() + (filePortion + " ").Substring(fileIndex + remove.Length).Trim());
             }
-            return fileFixed;
+
+			while (fileFixed.Length > 0 && fileFixed.EndsWith("."))
+			{
+				fileFixed = fileFixed.Substring(0, fileFixed.Length - 1);
+			}
+
+			return fileFixed;
         }
 
         public static string RemoveTimestampedMark(string fileName)
@@ -112,7 +118,13 @@ namespace winexpext.lib.Helpers
                     ? filePortion
                     : filePortion.Substring(0, fileIndex).Trim() + (filePortion + " ").Substring(fileIndex + remove.Length).Trim());
             }
-            return fileFixed;
+
+			while (fileFixed.Length > 0 && fileFixed.EndsWith("."))
+			{
+				fileFixed = fileFixed.Substring(0, fileFixed.Length - 1);
+			}
+
+			return fileFixed;
         }
 
         public static string CalculateHash(string filename, HashingMethod hashMethod)

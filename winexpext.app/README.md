@@ -43,7 +43,9 @@ If you don't plan to add any new functions or tweak the code for your needs:
 ### Revision History
 
 2026-05-25 -- v1.3.0
-- Add dropAppendages to remove (#) (e.g. "file (1).txt" becomes "file.txt")
+- Add removeCopyMark remove (#) (e.g. "file (1).txt" becomes "file.txt")
+- Add removeRenameMark remove "Copy" (e.g. "file - Copy.txt" becomes "file.txt")
+- Add removeTimestampedMark (e.g. "file-2026-05-30-123456.txt" becomes "file.txt")
 
 2024-07-15 -- v1.2.0
 - Add file hashed value generation for MD5, SHA1, SHA256, SHA384 and SHA512

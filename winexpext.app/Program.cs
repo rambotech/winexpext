@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using winexpext.lib;
@@ -262,7 +262,7 @@ namespace winexpext   // Windows Explorer Extension
             {
                 sw.WriteLine($"{hashMethod} for {Filename}...");
                 sw.WriteLine();
-                sw.WriteLine(Methods.TimestampedSuffix(Filename));
+                sw.WriteLine(Methods.CalculateHash(Filename, hashMethod));
                 sw.WriteLine();
                 var s = DateTime.Now.ToString("f");
                 sw.WriteLine($"Generated On: {s}...");

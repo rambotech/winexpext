@@ -1,158 +1,172 @@
-﻿using NUnit.Framework.Internal;
+using System.Runtime.CompilerServices;
+using NUnit.Framework.Internal;
 using winexpext;
 using winexpext.lib;
 
 namespace winexpext.unittest
 {
-    public class Tests
-    {
-        [SetUp]
-        public void Setup()
-        {
-        }
+	public class Tests
+	{
+		private string UsePath = string.Empty;
+		private Dictionary<string, string> _TestFiles = new Dictionary<string, string>();
 
-        [Test]
-        public void Test_removeCopyMark_1()
-        {
-            const string testFileName = @"c:\_1\test-backup(1).tar - Copy.gz";
-            var result = Methods.RemoveCopyMark(testFileName);
-            var expected = @"c:\_1\test-backup(1).tar.gz";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		public Tests()
+		{
+			UsePath = Path.Combine(
+				Path.GetTempPath(),
+				string.Format("winexpext.unittest.{0:yyyyMMdd-HHmmss}", DateTime.Now)
+			);
+			Directory.CreateDirectory(UsePath);
 
-        [Test]
-        public void Test_removeCopyMark_2()
-        {
-            const string testFileName = @"c:\_1\test-backup(1) - Copy.tar.gz";
-            var result = Methods.RemoveCopyMark(testFileName);
-            var expected = @"c:\_1\test-backup(1).tar.gz";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+			_TestFiles.Add("Test_removeCopyMark_1", Path.Combine(UsePath, "test-backup(1).tar - Copy.gz"));
+			_TestFiles.Add("Test_removeCopyMark_2", Path.Combine(UsePath, "test-backup(1) - Copy.tar.gz"));
+			_TestFiles.Add("Test_removeCopyMark_3", Path.Combine(UsePath, "test-backup(1) - Copy.tar.gz"));
+			_TestFiles.Add("Test_removeCopyMark_4", Path.Combine(UsePath, "test-backup(1) - Copy."));
+			_TestFiles.Add("Test_removeCopyMark_5", Path.Combine(UsePath, "test-backup(1) - Cop.tar.gz"));
+			_TestFiles.Add("Test_removeRenameMark_1", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload (1).mobi"));
+			_TestFiles.Add("Test_removeRenameMark_2", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload (1).mobi"));
+			_TestFiles.Add("Test_removeRenameMark_3", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload (1).mobi"));
+			_TestFiles.Add("Test_removeRenameMark_4", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload(1) .mobi"));
+			_TestFiles.Add("Test_removeRenameMark_5", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload(1)"));
+			_TestFiles.Add("Test_removeRenameMark_6", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload(1)."));
+			_TestFiles.Add("Test_removeRenameMark_7", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload (1) .mobi"));
+			_TestFiles.Add("Test_removeTimestampedMark_1", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload-20260526-091716.mobi"));
+			_TestFiles.Add("Test_removeTimestampedMark_2", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload-20260526-091716.mobi"));
+			_TestFiles.Add("Test_removeTimestampedMark_3", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload-20260526-091716"));
+			_TestFiles.Add("Test_removeTimestampedMark_4", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload-20260526-091716."));
 
-        [Test]
-        public void Test_removeCopyMark_3()
-        {
-            const string testFileName = @"c:\_1\test-backup(1) - Copy";
-            var result = Methods.RemoveCopyMark(testFileName);
-            var expected = @"c:\_1\test-backup(1)";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+			foreach (var key in _TestFiles.Keys)
+			{
+				if (!File.Exists(_TestFiles[key])) File.Create(_TestFiles[key]);
+			}
+		}
 
 		[Test]
-		public void Test_removeCopyMark_4()
+		public void Test_removeCopyMark_1()
 		{
-			const string testFileName = @"c:\_1\test-backup(1) - Copy.";
-			var result = Methods.RemoveCopyMark(testFileName);
-			var expected = @"c:\_1\test-backup(1)";
+			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_1"]);
+			var expected = $"{UsePath}\\test-backup(1).tar.gz";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
 		[Test]
-        public void Test_removeCopyMark_5()
-        {
-            const string testFileName = @"c:\_1\test-backup(1) - Cop.tar.gz";
-            var result = Methods.RemoveCopyMark(testFileName);
-            var expected = @"c:\_1\test-backup(1) - Cop.tar.gz";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
-        [Test]
+		public void Test_removeCopyMark_2()
+		{
+			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_2"]);
+			var expected = $"{UsePath}\\test-backup(1).tar.gz";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        public void Test_removeRenameMark_1()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload (1).mobi";
-            var result = Methods.RemoveRenameMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload.mobi";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		[Test]
+		public void Test_removeCopyMark_3()
+		{
+			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_3"]);
+			var expected = $"{UsePath}\\test-backup(1).tar.gz";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        [Test]
-        public void Test_removeRenameMark_2()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload (1).mobi";
-            var result = Methods.RemoveRenameMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload.mobi";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		[Test]
+		public void Test_removeCopyMark_4()
+		{
+			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_4"]);
+			var expected = $"{UsePath}\\test-backup(1)";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        [Test]
-        public void Test_removeRenameMark_3()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload(1).mobi";
-            var result = Methods.RemoveRenameMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload.mobi";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		[Test]
+		public void Test_removeCopyMark_5()
+		{
+			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_5"]);
+			var expected = $"{UsePath}\\test-backup(1) - Cop.tar.gz";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
+		[Test]
 
-        [Test]
-        public void Test_removeRenameMark_4()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload(1) .mobi";
-            var result = Methods.RemoveRenameMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload.mobi";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		public void Test_removeRenameMark_1()
+		{
+			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_1"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        [Test]
-        public void Test_removeRenameMark_5()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload(1)";
-            var result = Methods.RemoveRenameMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		[Test]
+		public void Test_removeRenameMark_2()
+		{
+			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_2"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        [Test]
-        public void Test_removeRenameMark_6()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload(1).";
-            var result = Methods.RemoveRenameMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		[Test]
+		public void Test_removeRenameMark_3()
+		{
+			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_3"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        [Test]
-        public void Test_removeRenameMark_7()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload (1) .mobi";
-            var result = Methods.RemoveRenameMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload.mobi";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		[Test]
+		public void Test_removeRenameMark_4()
+		{
+			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_4"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        [Test]
-        public void Test_removeTimestampedMark_1()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload-20260526-091716.mobi";
-            var result = Methods.RemoveTimestampedMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload.mobi";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		[Test]
+		public void Test_removeRenameMark_5()
+		{
+			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_5"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        [Test]
-        public void Test_removeTimestampedMark_2()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload-20260526-091716.mobi";
-            var result = Methods.RemoveTimestampedMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload.mobi";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		[Test]
+		public void Test_removeRenameMark_6()
+		{
+			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_6"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        [Test]
-        public void Test_removeTimestampedMark_3()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload-20260526-091716";
-            var result = Methods.RemoveTimestampedMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
+		[Test]
+		public void Test_removeRenameMark_7()
+		{
+			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_7"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
 
-        [Test]
-        public void Test_removeTimestampedMark_4()
-        {
-            const string testFileName = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload-20260526-091716.";
-            var result = Methods.RemoveTimestampedMark(testFileName);
-            var expected = @"C:\Users\johnm\Documents\Books\CloudComputing\awsadministration_thedefinitiveguide_reupload";
-            Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
-        }
-    }
+		[Test]
+		public void Test_removeTimestampedMark_1()
+		{
+			var result = Methods.RemoveTimestampedMark(_TestFiles["Test_removeTimestampedMark_1"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
+
+		[Test]
+		public void Test_removeTimestampedMark_2()
+		{
+			var result = Methods.RemoveTimestampedMark(_TestFiles["Test_removeTimestampedMark_2"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
+
+		[Test]
+		public void Test_removeTimestampedMark_3()
+		{
+			var result = Methods.RemoveTimestampedMark(_TestFiles["Test_removeTimestampedMark_3"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
+
+		[Test]
+		public void Test_removeTimestampedMark_4()
+		{
+			var result = Methods.RemoveTimestampedMark(_TestFiles["Test_removeTimestampedMark_4"]);
+			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload";
+			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
+		}
+	}
 }

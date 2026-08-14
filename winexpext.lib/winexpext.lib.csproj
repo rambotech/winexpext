@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BOG.SwissArmyKnife" Version="1.15.0" />
+  </ItemGroup>
+
 </Project>

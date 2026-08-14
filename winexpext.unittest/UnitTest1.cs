@@ -1,16 +1,23 @@
 using System.Runtime.CompilerServices;
+using NUnit.Framework;
 using NUnit.Framework.Internal;
 using winexpext;
 using winexpext.lib;
 
 namespace winexpext.unittest
 {
+	[TestFixture]
 	public class Tests
 	{
 		private string UsePath = string.Empty;
 		private Dictionary<string, string> _TestFiles = new Dictionary<string, string>();
 
 		public Tests()
+		{
+		}
+
+		[NUnit.Framework.OneTimeSetUp]
+		public void OneTimeSetUp()
 		{
 			UsePath = Path.Combine(
 				Path.GetTempPath(),

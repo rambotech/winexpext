@@ -1,5 +1,13 @@
 {
   "profiles": {
+    "Remove Explorer Shortcuts": {
+      "commandName": "Project",
+      "commandLineArgs": "--del"
+    },
+    "Add Explorer Shortcuts": {
+      "commandName": "Project",
+      "commandLineArgs": "--add"
+    },
     "Help (No Filename)": {
       "commandName": "Project",
       "commandLineArgs": "demonstrate"

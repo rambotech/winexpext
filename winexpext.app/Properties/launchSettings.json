@@ -1,12 +1,12 @@
 {
   "profiles": {
-    "Remove Explorer Shortcuts": {
+    "Remove Explorer Extensions": {
       "commandName": "Project",
-      "commandLineArgs": "--del"
+      "commandLineArgs": "--deleteExplorerExtensions"
     },
-    "Add Explorer Shortcuts": {
+    "Add Explorer Extensions": {
       "commandName": "Project",
-      "commandLineArgs": "--add"
+      "commandLineArgs": "--addExplorerExtensions"
     },
     "Help (No Filename)": {
       "commandName": "Project",

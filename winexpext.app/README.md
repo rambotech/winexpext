@@ -45,6 +45,10 @@ If you don't plan to add any new functions or tweak the code for your needs:
 2026-08-13 -- v1.4.0-alpha
 - 
 
+2026-10-07 -- v1.4.0
+- Fix multifile handling.
+- Adjust launch of add / remove explorer extensions to be more robust.
+
 2026-05-25 -- v1.3.0
 - Add dropAppendages to remove (#) (e.g. "file (1).txt" becomes "file.txt")
 

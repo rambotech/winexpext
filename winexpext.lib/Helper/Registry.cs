@@ -63,7 +63,7 @@ namespace winexpext.lib.Helper
 [HKEY_CLASSES_ROOT\*\shell\Hash SHA256]
 
 [HKEY_CLASSES_ROOT\*\shell\Hash SHA256\command]
-@=""{{APPEXE}} exe hashSHA256 \""%1\"" %*""
+@=""{{APPEXE}} hashSHA256 \""%1\"" %*""
 ""extension""=""""
 
 [HKEY_CLASSES_ROOT\*\shell\Hash SHA384]
@@ -121,8 +121,16 @@ namespace winexpext.lib.Helper
 			}
 			var outputFile = Path.Combine(outputFolder, filename);
 			File.WriteAllText(outputFile, registryContent, Encoding.ASCII);
-			Process.Start("C:\\Windows\\explorer.exe", $"/n /s /root,\"{outputFile}\"");
-			//Process.Start(outputFile);
+			// Process.Start("C:\\Windows\\explorer.exe", $"/n /s /root,\"{outputFile}\"");
+			var si = new ProcessStartInfo
+			{
+				FileName = "regedit.exe",
+				Arguments = $"/s \"{outputFile}\"",
+				Verb = "runas", // Run as administrator
+				UseShellExecute = true,
+				CreateNoWindow = true
+			};
+			Process.Start(si);
 		}
 	}
 }

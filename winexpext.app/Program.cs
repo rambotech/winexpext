@@ -1,8 +1,8 @@
+using BOG.SwissArmyKnife;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.CompilerServices;
+using System.Text;
 using winexpext.lib;
 using winexpext.lib.Helper;
 using static winexpext.lib.Methods;
@@ -17,119 +17,130 @@ namespace winexpext   // Windows Explorer Extension
 			Rename
 		}
 
-		static readonly int NoDelay = -1;
-		static readonly int UserMustClose = 0;
-		static readonly bool LogToFile = true;
-		static readonly bool LogToConsole = false;
-
 		static string Filename = string.Empty;
+		static int fileArgIndex = 0;
 
 		static void Main(string[] args)
 		{
+			var NothingDone = true;
 			try
 			{
+				var a = new BOG.SwissArmyKnife.AssemblyVersion(BOG.SwissArmyKnife.AssemblyVersion.AssemblySource.Entry);
+				ConsoleAndLoggedSimple($"{a.ToString()}", "*main", true);
 				if (args.Length == 0)
 				{
-					ShowHelp("No argument(s)");
-					Console.WriteLine("Press ENTER to close...");
-					Console.ReadLine();
-					System.Environment.Exit(2);
+					throw new ArgumentNullException("No argument(s)");
 				}
 				if (args.Length == 1)
 				{
-					if (string.Compare(args[0], "--add") == 0)
+					if (new string[] { "--addExplorerExtensions", "-A" }.Contains(args[0], StringComparer.OrdinalIgnoreCase))
 					{
+						ConsoleAndLoggedSimple("Adding Explorer shortcuts...", "--add", true);
+						Console.WriteLine();
 						new Registry().AddExplorerShortcuts();
-						Console.WriteLine("Adding Explorer shortcuts...");
 						Console.WriteLine("Press ENTER to close...");
 						Console.ReadLine();
 						System.Environment.Exit(0);
 					}
-					if (string.Compare(args[0], "--del") == 0)
+					if (new string[] { "--deleteExplorerExtensions", "-D" }.Contains(args[0], StringComparer.OrdinalIgnoreCase))
 					{
+						ConsoleAndLoggedSimple("Removing Explorer shortcuts...", "--del", true);
 						new Registry().RemoveExplorerShortcuts();
-						Console.WriteLine("Removing Explorer shortcuts...");
 						Console.WriteLine("Press ENTER to close...");
 						Console.ReadLine();
 						System.Environment.Exit(0);
 					}
+					throw new ArgumentNullException($"Missing one or more argument(s) for command \"{args[0]}\".");
 				}
 
 				Methods.FileAction action;
 				if (!Enum.TryParse<Methods.FileAction>(args[0], out action))
 				{
-					ShowHelp($"Unrecognized command: {args[0]}");
-					Console.WriteLine("Press ENTER to close...");
-					Console.ReadLine();
-					System.Environment.Exit(2);
+					throw new ArgumentException($"Unrecognized command: {args[0]}");
 				}
-				for (int i = 0; i < args.Length; i++)
+				for (fileArgIndex = 1; fileArgIndex < args.Length; fileArgIndex++)
 				{
-					Filename = args[i];
+					Filename = args[fileArgIndex];
 					if (!File.Exists(Filename))
 					{
-						Console.WriteLine($"-- File not found: {Filename}");
+						ConsoleAndLoggedSimple($"Skipping #{fileArgIndex} of {args.Length}: file not found: {Filename}", $"Filename #{fileArgIndex}", true);
 						continue;
 					}
-					Console.Write($"Processing: {args[1]}: ");
+					ConsoleAndLoggedFull($"Processing #{fileArgIndex} of {args.Length}: ", $"Filename #{fileArgIndex}", true);
 					switch (action)
 					{
 						case Methods.FileAction.timestampRename:
+							NothingDone = false;
 							TimestampedCopyOrRename(TimestampingAction.Rename);
-							Console.WriteLine("OK");
 							break;
 						case Methods.FileAction.timestampCopy:
+							NothingDone = false;
 							TimestampedCopyOrRename(TimestampingAction.Copy);
-							Console.WriteLine("OK");
 							break;
 						case Methods.FileAction.removeCopyMark:
+							NothingDone = false;
 							RemoveCopyMark();
-							Console.WriteLine("OK");
 							break;
 						case Methods.FileAction.removeRenameMark:
+							NothingDone = false;
 							RemoveRenameMark();
-							Console.WriteLine("OK");
 							break;
 						case Methods.FileAction.removeTimestampedMark:
+							NothingDone = false;
 							RemoveTimestampedMark();
-							Console.WriteLine("OK");
 							break;
 						case Methods.FileAction.hashMD5:
+							NothingDone = false;
 							CalculateHash(HashingMethod.MD5);
-							Console.WriteLine("OK");
 							break;
 						case Methods.FileAction.hashSHA1:
+							NothingDone = false;
 							CalculateHash(HashingMethod.SHA1);
-							Console.WriteLine("OK");
 							break;
 						case Methods.FileAction.hashSHA256:
+							NothingDone = false;
 							CalculateHash(HashingMethod.SHA256);
-							Console.WriteLine("OK");
 							break;
 						case Methods.FileAction.hashSHA384:
+							NothingDone = false;
 							CalculateHash(HashingMethod.SHA384);
-							Console.WriteLine("OK");
 							break;
 						case Methods.FileAction.hashSHA512:
+							NothingDone = false;
 							CalculateHash(HashingMethod.SHA512);
-							Console.WriteLine("OK");
 							break;
 						default:
-							throw new Exception($"No method for defined action \"{action}\"");
+							throw new Exception($"No known method for the command \"{action}\"");
 					}
 				}
-				System.Environment.Exit(0);
+				if (NothingDone)
+				{
+					ShowHelp($"No changes were performed when executed {args[0]}");
+					System.Environment.ExitCode = 2;
+				}
 			}
-
+			catch (ArgumentNullException err)
+			{
+				var ex = (Exception)err;
+				ConsoleAndLoggedSimple(DetailedException.WithMachineContent(ref ex), "(ArgumentNullException)", true);
+				System.Environment.ExitCode = 1;
+			}
 			catch (ArgumentException err)
 			{
-				ConsoleAndLogged($"{err.Message}", "(Main)");
-				System.Environment.Exit(2);
+				var ex = (Exception)err;
+				ConsoleAndLoggedSimple(DetailedException.WithMachineContent(ref ex), "(ArgumentException)", true);
+				System.Environment.ExitCode = 2;
 			}
 			catch (Exception err)
 			{
-				ConsoleAndLogged($"{err.Message}", "(Main)", 0, true);
-				System.Environment.Exit(3);
+				var ex = (Exception)err;
+				ConsoleAndLoggedSimple(DetailedException.WithMachineContent(ref ex), $"{err.GetType()}", true);
+				System.Environment.ExitCode = 3;
+			}
+			if (System.Environment.ExitCode != 0)
+			{
+				Console.ReadLine();
+				System.Environment.Exit(2);
 			}
 		}
 
@@ -137,25 +148,26 @@ namespace winexpext   // Windows Explorer Extension
 		{
 			if (!string.IsNullOrWhiteSpace(message))
 			{
+				ConsoleAndLoggedSimple($"{message}", string.Empty, true);
 				Console.WriteLine(message);
 			}
 
 			Console.WriteLine();
 			Console.WriteLine("winexpext command filename");
 			Console.WriteLine();
-			Console.WriteLine("winexpext removeCopyMarks sourceFile");
-			Console.WriteLine("winexpext removeRenameMarks sourceFile");
-			Console.WriteLine("winexpext removeTimestamp sourceFile");
-			Console.WriteLine("winexpext timestampedCopy sourceFile");
-			Console.WriteLine("winexpext timestampedRename sourceFile");
-			Console.WriteLine("winexpext hashMD5 sourceFile");
-			Console.WriteLine("winexpext hashSHA1 sourceFile");
-			Console.WriteLine("winexpext hashSHA256 sourceFile");
-			Console.WriteLine("winexpext hashSHA384 sourceFile");
-			Console.WriteLine("winexpext hashSHA512 sourceFile");
+			Console.WriteLine("winexpext removeCopyMarks sourceFile [sourceFile [...]]");
+			Console.WriteLine("winexpext removeRenameMarks sourceFile [sourceFile [...]]");
+			Console.WriteLine("winexpext removeTimestamp sourceFile [sourceFile [...]]");
+			Console.WriteLine("winexpext timestampedCopy sourceFile [sourceFile [...]]");
+			Console.WriteLine("winexpext timestampedRename sourceFile [sourceFile [...]]");
+			Console.WriteLine("winexpext hashMD5 sourceFile [sourceFile [...]]");
+			Console.WriteLine("winexpext hashSHA1 sourceFile [sourceFile [...]]");
+			Console.WriteLine("winexpext hashSHA256 sourceFile [sourceFile [...]]");
+			Console.WriteLine("winexpext hashSHA384 sourceFile [sourceFile [...]]");
+			Console.WriteLine("winexpext hashSHA512 sourceFile [sourceFile [...]]");
 			Console.WriteLine();
 			Console.WriteLine("Use:");
-			Console.WriteLine("winexpext command /test filename");
+			Console.WriteLine("winexpext command filename [filename [...]]");
 			Console.WriteLine("To only display the results, with no change");
 			Console.WriteLine();
 		}
@@ -304,84 +316,41 @@ namespace winexpext   // Windows Explorer Extension
 			Process.Start(p);
 		}
 
-		static void ConsoleAndLogged(string message, string functionName)
+		static void ConsoleAndLoggedSimple(string message, string functionName, bool logMessage)
 		{
-			ConsoleAndLogged(message, functionName, UserMustClose, LogToConsole);
+			ConsoleAndLogged(message, functionName, logMessage, false);
 		}
 
-		static void ConsoleAndLogged(string message, string functionName, int secondsToDisplay)
+		static void ConsoleAndLoggedFull(string message, string functionName, bool logMessage)
 		{
-			ConsoleAndLogged(message, functionName, secondsToDisplay, false);
+			ConsoleAndLogged(message, functionName, logMessage, true);
 		}
 
-		static void ConsoleAndLogged(string message, string functionName, bool logMessage)
-		{
-			ConsoleAndLogged(message, functionName, UserMustClose, logMessage);
-		}
-
-		static void ConsoleAndLogged(string message, string functionName, int secondsToDisplay, bool logMessage)
+		static void ConsoleAndLogged(string message, string functionName, bool logMessage, bool useDetailsInLog)
 		{
 			if (logMessage)
 			{
 				var errorFile = Path.Combine(Path.GetTempPath(), $"winexpext_{DateTime.Now:yyyy-MM-dd}_log.txt");
 				using (var sw = new StreamWriter(errorFile, true))
 				{
-					sw.WriteLine(new string('-', 50));
-					sw.WriteLine($"Generated On:     ... {DateTime.Now:f}");
-					sw.WriteLine($"Function:         ... {functionName}");
-					sw.WriteLine($"File name:        ... {Filename}");
-					sw.WriteLine();
-					sw.WriteLine(message);
-					sw.WriteLine();
+					if (useDetailsInLog)
+					{
+						sw.WriteLine(new string('-', 50));
+						sw.WriteLine($"Generated On:     ... {DateTime.Now:f}");
+						sw.WriteLine($"Function:         ... {functionName}");
+						sw.WriteLine($"File name:        ... {Filename}");
+						sw.WriteLine();
+						sw.WriteLine(message);
+						sw.WriteLine();
+					}
+					else
+					{
+						sw.WriteLine(message);
+					}
 				}
 			}
-
-			if (secondsToDisplay < 0)
-			{
-				return;
-			}
-
 			Console.WriteLine(message);
 
-			var userMustClose = secondsToDisplay <= 0.0d;
-			if (!userMustClose)  // timesout and return after the expired wait time.
-			{
-				var timeoutSeconds = (int)(secondsToDisplay < 2.0d ? 5.0d : secondsToDisplay);
-				var secondsElapsed = -1;
-				var sw = new Stopwatch();
-				sw.Start();
-				while (!userMustClose && sw.Elapsed.Seconds < timeoutSeconds)
-				{
-					if (secondsElapsed != (int)sw.Elapsed.TotalSeconds)
-					{
-						secondsElapsed = (int)sw.Elapsed.TotalSeconds;
-						var Elapsed = $"  {timeoutSeconds - secondsElapsed}";
-						Console.WriteLine($"Press ENTER to close or X to keep open ... {Elapsed.Substring(Elapsed.Length - 3, 3)}");
-						Console.CursorTop--;
-					}
-					if (Console.KeyAvailable)
-					{
-						switch (Console.ReadKey(true).KeyChar)
-						{
-							case 'x':
-							case 'X':
-								userMustClose = true;
-								break;
-							case '\r':
-								timeoutSeconds = 0;
-								break;
-							default:
-								break;
-						}
-					}
-				}
-				System.Threading.Thread.Sleep(100);
-			}
-			if (userMustClose)
-			{
-				Console.WriteLine($"Press ENTER to close...                                 ");
-				Console.ReadLine();
-			}
 		}
 	}
 }

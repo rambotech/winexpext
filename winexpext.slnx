@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/dotnet.yml" />
+  </Folder>
+  <Folder Name="/_Solution/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="winexpext.app/winexpext.app.csproj" />
+  <Project Path="winexpext.lib/winexpext.lib.csproj" />
+  <Project Path="winexpext.unittest/winexpext.unittest.csproj" />
+</Solution>

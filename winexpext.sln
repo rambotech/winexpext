@@ -22,8 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution", "_Solution", "{
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "winexpext.winapp", "winexpext.winapp\winexpext.winapp.csproj", "{EBC50060-0A9D-4294-BC7F-F34D19420BD5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,10 +40,6 @@ Global
 		{219401E2-D52F-548D-A522-F2229BBE3104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{219401E2-D52F-548D-A522-F2229BBE3104}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{219401E2-D52F-548D-A522-F2229BBE3104}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EBC50060-0A9D-4294-BC7F-F34D19420BD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBC50060-0A9D-4294-BC7F-F34D19420BD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBC50060-0A9D-4294-BC7F-F34D19420BD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBC50060-0A9D-4294-BC7F-F34D19420BD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

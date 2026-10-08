@@ -2,6 +2,7 @@ using BOG.SwissArmyKnife;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using winexpext.lib;
 using winexpext.lib.Helper;
@@ -33,7 +34,8 @@ namespace winexpext   // Windows Explorer Extension
 				}
 				if (args.Length == 1)
 				{
-					if (new string[] { "--addExplorerExtensions", "-A" }.Contains(args[0], StringComparer.OrdinalIgnoreCase))
+					var addCmds = new string[] { "--addExplorerExtensions", "-A" };
+					if (addCmds.Contains(args[0]))
 					{
 						ConsoleAndLoggedSimple("Adding Explorer shortcuts...", "--add", true);
 						Console.WriteLine();
@@ -42,7 +44,8 @@ namespace winexpext   // Windows Explorer Extension
 						Console.ReadLine();
 						System.Environment.Exit(0);
 					}
-					if (new string[] { "--deleteExplorerExtensions", "-D" }.Contains(args[0], StringComparer.OrdinalIgnoreCase))
+						var delCmds = new string[] { "--deleteExplorerExtensions", "-D" };
+					if (delCmds.Contains(args[0]))
 					{
 						ConsoleAndLoggedSimple("Removing Explorer shortcuts...", "--del", true);
 						new Registry().RemoveExplorerShortcuts();

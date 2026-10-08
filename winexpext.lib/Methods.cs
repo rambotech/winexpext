@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 namespace winexpext.lib
@@ -7,7 +7,7 @@ namespace winexpext.lib
 	{
 		public enum HashingMethod : int
 		{
-			NotSpecificed,
+			NotSpecified,
 			MD5,
 			SHA1,
 			SHA256,
@@ -29,20 +29,13 @@ namespace winexpext.lib
 			hashSHA512
 		}
 
-		public static readonly Dictionary<FileAction, string> FileActionDisplay = new Dictionary<FileAction, string>
-		{
-			{ FileAction.timestampCopy,"Copy full file path to clipboard"},
-			{ FileAction.timestampCopy,"Copy file and append timestamp"},
-			{ FileAction.timestampRename,"Rename file and append timestamp"},
-			{ FileAction.removeCopyMark,"Remove \" - Copy\" from file name"},
-			{ FileAction.removeRenameMark,"Remove \"(#)\" rename mark from file name\""},
-			{ FileAction.removeTimestampedMark,"Remove \"-yyyyMMdd-hhmmss\" from file name\""},
-			{ FileAction.hashMD5,"Calculate MD5 hash for file content"},
-			{ FileAction.hashSHA1,"Calculate SHA1 hash for file content"},
-			{ FileAction.hashSHA256,"Calculate SHA256 hash for file content"},
-			{ FileAction.hashSHA384,"Calculate SHA384 hash for file content"},
-			{ FileAction.hashSHA512,"Calculate SHA512 hash for file content"}
-		};
+		public static readonly FileAction[] FileActionTesting =
+		[
+			FileAction.timestampCopy,
+			FileAction.timestampRename,
+			FileAction.removeCopyMark,
+			FileAction.removeRenameMark
+		];
 
 		public static readonly int NoDelay = -1;
 		public static readonly int UserMustClose = 0;
@@ -54,7 +47,7 @@ namespace winexpext.lib
 			var datetimePortion = File.GetLastWriteTime(fileName).ToString("-yyyyMMdd-HHmmss");
 
 			return Path.Combine(
-				Path.GetDirectoryName(fileName),
+				Path.GetDirectoryName(fileName) ?? string.Empty,
 				Path.GetFileNameWithoutExtension(fileName) + datetimePortion + Path.GetExtension(fileName)
 			);
 		}

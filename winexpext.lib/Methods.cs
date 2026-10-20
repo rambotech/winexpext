@@ -129,6 +129,7 @@ namespace winexpext.lib
 
 		public static string CalculateHash(string filename, HashingMethod hashMethod)
 		{
+			var result = string.Empty;
 			using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.SequentialScan))
 			{
 				var hashed = hashMethod switch
@@ -140,8 +141,9 @@ namespace winexpext.lib
 					HashingMethod.SHA512 => SHA512.Create().ComputeHash(stream),
 					_ => throw new Exception($"Unrecognized hash method: {hashMethod}")
 				};
-				return BitConverter.ToString(hashed).ToLowerInvariant().Replace("-", string.Empty);
+				result = BitConverter.ToString(hashed).ToLowerInvariant().Replace("-", string.Empty);
 			}
+			return result;
 		}
 	}
 }

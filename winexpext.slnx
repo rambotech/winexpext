@@ -3,11 +3,19 @@
   <Folder Name="/.github/workflows/">
     <File Path=".github/workflows/dotnet.yml" />
   </Folder>
-  <Folder Name="/_Solution/">
+  <Folder Name="/_00_Solution/">
     <File Path=".gitattributes" />
     <File Path=".gitignore" />
+    <File Path="README.md" />
   </Folder>
-  <Project Path="winexpext.app/winexpext.app.csproj" />
-  <Project Path="winexpext.lib/winexpext.lib.csproj" />
-  <Project Path="winexpext.unittest/winexpext.unittest.csproj" />
+  <Folder Name="/_01_Applications/">
+    <Project Path="winexpext.app/winexpext.app.csproj" />
+  </Folder>
+  <Folder Name="/_02_Library/">
+    <Project Path="winexpext.lib/winexpext.lib.csproj" />
+  </Folder>
+  <Folder Name="/_03_Testing/">
+    <Project Path="winexpext.unittest/winexpext.unittest.csproj" />
+  </Folder>
+  <Folder Name="/_04_Installer/" />
 </Solution>

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using winexpext.lib;
 using winexpext.lib.Helper;
 using static winexpext.lib.Methods;
@@ -21,6 +22,7 @@ namespace winexpext   // Windows Explorer Extension
 		static string Filename = string.Empty;
 		static int fileArgIndex = 0;
 
+		[STAThread]
 		static void Main(string[] args)
 		{
 			var NothingDone = true;
@@ -44,7 +46,7 @@ namespace winexpext   // Windows Explorer Extension
 						Console.ReadLine();
 						System.Environment.Exit(0);
 					}
-						var delCmds = new string[] { "--deleteExplorerExtensions", "-D" };
+					var delCmds = new string[] { "--deleteExplorerExtensions", "-D" };
 					if (delCmds.Contains(args[0]))
 					{
 						ConsoleAndLoggedSimple("Removing Explorer shortcuts...", "--del", true);
@@ -147,6 +149,7 @@ namespace winexpext   // Windows Explorer Extension
 			}
 		}
 
+		[STAThread]
 		static void ShowHelp(string message)
 		{
 			if (!string.IsNullOrWhiteSpace(message))
@@ -298,17 +301,63 @@ namespace winexpext   // Windows Explorer Extension
 
 		static void CalculateHash(Methods.HashingMethod hashMethod)
 		{
-			var resultFile = Path.Combine(
-				Path.GetTempPath(),
-				Filename + $".{hashMethod}.txt");
+			var resultFile = Filename + $".winexpext.{hashMethod}.txt";
+			string resultingHash = Methods.CalculateHash(Filename, hashMethod);
+			var fileOutput = new StringBuilder();
+			try
+			{
+				var s = DateTime.Now.ToString("F");
+
+				fileOutput.AppendLine($"Generated On: {s}...");
+				fileOutput.AppendLine($"=========================================");
+				fileOutput.AppendLine($"{hashMethod} for {Filename}...");
+				fileOutput.AppendLine();
+				fileOutput.AppendLine($"   {resultingHash}");
+				fileOutput.AppendLine();
+				var relatedFiles = Path.GetFileNameWithoutExtension(Filename) + "*.*";
+				foreach (var filename in Directory.GetFiles(Path.GetDirectoryName(Filename), relatedFiles, new EnumerationOptions
+				{
+					IgnoreInaccessible = true,
+					RecurseSubdirectories = false
+				}))
+				{
+					if (filename == resultFile) continue;
+					if (new FileInfo(filename).Length > 1024L) continue;
+					using (var sr = new StreamReader(filename))
+					{
+						var indexOf = -1;
+						var lineCount = 0;
+						var line = string.Empty;
+						while (!sr.EndOfStream && indexOf == -1 && lineCount++ < 10)
+						{
+							line = sr.ReadLine();
+							indexOf = line.IndexOf(resultingHash, StringComparison.InvariantCultureIgnoreCase);
+						}
+						if (indexOf > -1)
+						{
+							fileOutput.AppendLine($"Exists at offset {indexOf} of line {lineCount} in {Path.GetFileName(filename)}");
+						}
+					}
+				}
+				var clipBoardText = Clipboard.GetText();
+				if (clipBoardText.Contains(resultingHash, StringComparison.CurrentCultureIgnoreCase))
+				{
+					fileOutput.AppendLine($"Found in clipboard text content");
+				}
+			}
+			catch (Exception err)
+			{
+				fileOutput.AppendLine(
+					DetailedException.WithMachineContent(
+						ref err,
+						$"Error processing hash for the source {Filename}",
+						""
+					)
+				);
+			}
 			using (var sw = new StreamWriter(resultFile, false))
 			{
-				sw.WriteLine($"{hashMethod} for {Filename}...");
-				sw.WriteLine();
-				sw.WriteLine(Methods.CalculateHash(Filename, hashMethod));
-				sw.WriteLine();
-				var s = DateTime.Now.ToString("f");
-				sw.WriteLine($"Generated On: {s}...");
+				sw.Write(fileOutput);
 			}
 			var p = new ProcessStartInfo
 			{

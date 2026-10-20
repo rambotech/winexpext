@@ -54,7 +54,7 @@
     },
     "SHA256": {
       "commandName": "Project",
-      "commandLineArgs": "hashSHA256 %TEMP%\\winexpext.tests\\innosetup-7.0.2-x64.exe"
+      "commandLineArgs": "hashSHA256 G:\\HOME_NETWORK\\ISO\\alpine-standard-3.24.2-x86_64.iso"
     },
     "SHA384": {
       "commandName": "Project",

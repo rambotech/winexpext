@@ -36,23 +36,27 @@ namespace winexpext   // Windows Explorer Extension
 				}
 				if (args.Length == 1)
 				{
-					var addCmds = new string[] { "--addExplorerExtensions", "-A" };
+					var addCmds = new string[] { "--ApplyExplorerExtensions", "-A" };
 					if (addCmds.Contains(args[0]))
 					{
 						ConsoleAndLoggedSimple("Adding Explorer shortcuts...", "--add", true);
 						Console.WriteLine();
 						new Registry().AddExplorerShortcuts();
+#if DEBUG
 						Console.WriteLine("Press ENTER to close...");
 						Console.ReadLine();
+#endif
 						System.Environment.Exit(0);
 					}
-					var delCmds = new string[] { "--deleteExplorerExtensions", "-D" };
+					var delCmds = new string[] { "--RemoveExplorerExtensions", "-D" };
 					if (delCmds.Contains(args[0]))
 					{
 						ConsoleAndLoggedSimple("Removing Explorer shortcuts...", "--del", true);
 						new Registry().RemoveExplorerShortcuts();
+#if DEBUG
 						Console.WriteLine("Press ENTER to close...");
 						Console.ReadLine();
+#endif
 						System.Environment.Exit(0);
 					}
 					throw new ArgumentNullException($"Missing one or more argument(s) for command \"{args[0]}\".");

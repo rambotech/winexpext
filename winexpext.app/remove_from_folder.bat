@@ -1,6 +1,8 @@
 @echo off
 
-net session 2>>&1 >nul
+REM Temporary until install package is created.
+
+net session > nul
 SET EL=%ERRORLEVEL%
 if %EL% NEQ 0 echo This batch file attempts to remove Windows Registry changes for the 
 if %EL% NEQ 0 echo application to appear in the Windows Explorer context-menu.

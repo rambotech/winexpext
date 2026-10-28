@@ -23,24 +23,27 @@ namespace winexpext.unittest
 				Path.GetTempPath(),
 				string.Format("winexpext.unittest.{0:yyyyMMdd-HHmmss}", DateTime.Now)
 			);
+			string pathSeparator = UsePath.LastIndexOf("/") > UsePath.LastIndexOf(@"\") ? @"/" : @"\\";
+			UsePath += pathSeparator;
+
 			Directory.CreateDirectory(UsePath);
 
-			_TestFiles.Add("Test_removeCopyMark_1", Path.Combine(UsePath, "test-backup(1).tar - Copy.gz"));
-			_TestFiles.Add("Test_removeCopyMark_2", Path.Combine(UsePath, "test-backup(1) - Copy.tar.gz"));
-			_TestFiles.Add("Test_removeCopyMark_3", Path.Combine(UsePath, "test-backup(1) - Copy.tar.gz"));
-			_TestFiles.Add("Test_removeCopyMark_4", Path.Combine(UsePath, "test-backup(1) - Copy."));
-			_TestFiles.Add("Test_removeCopyMark_5", Path.Combine(UsePath, "test-backup(1) - Cop.tar.gz"));
-			_TestFiles.Add("Test_removeRenameMark_1", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload (1).mobi"));
-			_TestFiles.Add("Test_removeRenameMark_2", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload (1).mobi"));
-			_TestFiles.Add("Test_removeRenameMark_3", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload (1).mobi"));
-			_TestFiles.Add("Test_removeRenameMark_4", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload(1) .mobi"));
-			_TestFiles.Add("Test_removeRenameMark_5", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload(1)"));
-			_TestFiles.Add("Test_removeRenameMark_6", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload(1)."));
-			_TestFiles.Add("Test_removeRenameMark_7", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload (1) .mobi"));
-			_TestFiles.Add("Test_removeTimestampedMark_1", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload-20260526-091716.mobi"));
-			_TestFiles.Add("Test_removeTimestampedMark_2", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload-20260526-091716.mobi"));
-			_TestFiles.Add("Test_removeTimestampedMark_3", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload-20260526-091716"));
-			_TestFiles.Add("Test_removeTimestampedMark_4", Path.Combine(UsePath, "awsadministration_thedefinitiveguide_reupload-20260526-091716."));
+			_TestFiles.Add("Test_removeCopyMark_1", UsePath + "test-backup(1).tar - Copy.gz");
+			_TestFiles.Add("Test_removeCopyMark_2", UsePath + "test-backup(1) - Copy.tar.gz");
+			_TestFiles.Add("Test_removeCopyMark_3", UsePath + "test-backup(1) - Copy.tar.gz");
+			_TestFiles.Add("Test_removeCopyMark_4", UsePath + "test-backup(1) - Copy.");
+			_TestFiles.Add("Test_removeCopyMark_5", UsePath + "test-backup(1) - Cop.tar.gz");
+			_TestFiles.Add("Test_removeRenameMark_1", UsePath + "awsadministration_thedefinitiveguide_reupload (1).mobi");
+			_TestFiles.Add("Test_removeRenameMark_2", UsePath + "awsadministration_thedefinitiveguide_reupload (1).mobi");
+			_TestFiles.Add("Test_removeRenameMark_3", UsePath + "awsadministration_thedefinitiveguide_reupload (1).mobi");
+			_TestFiles.Add("Test_removeRenameMark_4", UsePath + "awsadministration_thedefinitiveguide_reupload(1) .mobi");
+			_TestFiles.Add("Test_removeRenameMark_5", UsePath + "awsadministration_thedefinitiveguide_reupload(1)");
+			_TestFiles.Add("Test_removeRenameMark_6", UsePath + "awsadministration_thedefinitiveguide_reupload(1).");
+			_TestFiles.Add("Test_removeRenameMark_7", UsePath + "awsadministration_thedefinitiveguide_reupload (1) .mobi");
+			_TestFiles.Add("Test_removeTimestampedMark_1", UsePath + "awsadministration_thedefinitiveguide_reupload-20260526-091716.mobi");
+			_TestFiles.Add("Test_removeTimestampedMark_2", UsePath + "awsadministration_thedefinitiveguide_reupload-20260526-091716.mobi");
+			_TestFiles.Add("Test_removeTimestampedMark_3", UsePath + "awsadministration_thedefinitiveguide_reupload-20260526-091716");
+			_TestFiles.Add("Test_removeTimestampedMark_4", UsePath + "awsadministration_thedefinitiveguide_reupload-20260526-091716.");
 
 			foreach (var key in _TestFiles.Keys)
 			{

@@ -11,15 +11,21 @@ on:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
     env: 
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-      TMPDIR: ${{ runner.temp }}
-      TMP: ${{ runner.temp }}
-      TEMP: ${{ runner.temp }}
-    runs-on: ubuntu-latest
+      # Remove the runner.temp definitions from here
 
     steps:
     - uses: actions/checkout@v3
+
+    # New step to set your temp environment variables dynamically
+    - name: Initialize Temp Directories
+      run: |
+        echo "TMPDIR=$RUNNER_TEMP" >> $GITHUB_ENV
+        echo "TMP=$RUNNER_TEMP" >> $GITHUB_ENV
+        echo "TEMP=$RUNNER_TEMP" >> $GITHUB_ENV
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:

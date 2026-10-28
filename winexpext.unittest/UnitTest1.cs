@@ -23,7 +23,7 @@ namespace winexpext.unittest
 				Path.GetTempPath(),
 				string.Format("winexpext.unittest.{0:yyyyMMdd-HHmmss}", DateTime.Now)
 			);
-			string pathSeparator = UsePath.LastIndexOf("/") > UsePath.LastIndexOf(@"\") ? @"/" : @"\\";
+			string pathSeparator = UsePath.IndexOf("/") == 0 ? @"/" : @"\";
 			UsePath += pathSeparator;
 
 			Directory.CreateDirectory(UsePath);
@@ -55,7 +55,7 @@ namespace winexpext.unittest
 		public void Test_removeCopyMark_1()
 		{
 			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_1"]);
-			var expected = $"{UsePath}\\test-backup(1).tar.gz";
+			var expected = $"{UsePath}test-backup(1).tar.gz";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -63,7 +63,7 @@ namespace winexpext.unittest
 		public void Test_removeCopyMark_2()
 		{
 			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_2"]);
-			var expected = $"{UsePath}\\test-backup(1).tar.gz";
+			var expected = $"{UsePath}test-backup(1).tar.gz";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -71,7 +71,7 @@ namespace winexpext.unittest
 		public void Test_removeCopyMark_3()
 		{
 			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_3"]);
-			var expected = $"{UsePath}\\test-backup(1).tar.gz";
+			var expected = $"{UsePath}test-backup(1).tar.gz";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -79,7 +79,7 @@ namespace winexpext.unittest
 		public void Test_removeCopyMark_4()
 		{
 			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_4"]);
-			var expected = $"{UsePath}\\test-backup(1)";
+			var expected = $"{UsePath}test-backup(1)";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -87,7 +87,7 @@ namespace winexpext.unittest
 		public void Test_removeCopyMark_5()
 		{
 			var result = Methods.RemoveCopyMark(_TestFiles["Test_removeCopyMark_5"]);
-			var expected = $"{UsePath}\\test-backup(1) - Cop.tar.gz";
+			var expected = $"{UsePath}test-backup(1) - Cop.tar.gz";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 		[Test]
@@ -95,7 +95,7 @@ namespace winexpext.unittest
 		public void Test_removeRenameMark_1()
 		{
 			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_1"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload.mobi";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -103,7 +103,7 @@ namespace winexpext.unittest
 		public void Test_removeRenameMark_2()
 		{
 			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_2"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload.mobi";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -111,7 +111,7 @@ namespace winexpext.unittest
 		public void Test_removeRenameMark_3()
 		{
 			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_3"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload.mobi";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -119,7 +119,7 @@ namespace winexpext.unittest
 		public void Test_removeRenameMark_4()
 		{
 			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_4"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload.mobi";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -127,7 +127,7 @@ namespace winexpext.unittest
 		public void Test_removeRenameMark_5()
 		{
 			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_5"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -135,7 +135,7 @@ namespace winexpext.unittest
 		public void Test_removeRenameMark_6()
 		{
 			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_6"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveRenameMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -143,7 +143,7 @@ namespace winexpext.unittest
 		public void Test_removeRenameMark_7()
 		{
 			var result = Methods.RemoveRenameMark(_TestFiles["Test_removeRenameMark_7"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload.mobi";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveCopyMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -151,7 +151,7 @@ namespace winexpext.unittest
 		public void Test_removeTimestampedMark_1()
 		{
 			var result = Methods.RemoveTimestampedMark(_TestFiles["Test_removeTimestampedMark_1"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload.mobi";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -159,7 +159,7 @@ namespace winexpext.unittest
 		public void Test_removeTimestampedMark_2()
 		{
 			var result = Methods.RemoveTimestampedMark(_TestFiles["Test_removeTimestampedMark_2"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload.mobi";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload.mobi";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -167,7 +167,7 @@ namespace winexpext.unittest
 		public void Test_removeTimestampedMark_3()
 		{
 			var result = Methods.RemoveTimestampedMark(_TestFiles["Test_removeTimestampedMark_3"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 
@@ -175,7 +175,7 @@ namespace winexpext.unittest
 		public void Test_removeTimestampedMark_4()
 		{
 			var result = Methods.RemoveTimestampedMark(_TestFiles["Test_removeTimestampedMark_4"]);
-			var expected = $"{UsePath}\\awsadministration_thedefinitiveguide_reupload";
+			var expected = $"{UsePath}awsadministration_thedefinitiveguide_reupload";
 			Assert.That(string.Compare(expected, result, false) == 0, $"RemoveTimestampedMark()\r\n:.. expected {expected}\r\n:.. actual: {result}");
 		}
 	}

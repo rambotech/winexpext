@@ -1,4 +1,7 @@
 <Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+  </Configurations>
   <Folder Name="/.github/" />
   <Folder Name="/.github/workflows/">
     <File Path=".github/workflows/dotnet.yml" />
@@ -9,13 +12,23 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/_01_Applications/">
-    <Project Path="winexpext.app/winexpext.app.csproj" />
+    <Project Path="winexpext.app/winexpext.app.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
   <Folder Name="/_02_Library/">
-    <Project Path="winexpext.lib/winexpext.lib.csproj" />
+    <Project Path="winexpext.lib/winexpext.lib.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
   <Folder Name="/_03_Testing/">
-    <Project Path="winexpext.unittest/winexpext.unittest.csproj" />
+    <Project Path="winexpext.unittest/winexpext.unittest.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
-  <Folder Name="/_04_Installer/" />
+  <Folder Name="/_04_Installer/">
+    <Project Path="Setup/Setup.vdproj" Type="Installer">
+      <Build Solution="*|x64" />
+    </Project>
+  </Folder>
 </Solution>

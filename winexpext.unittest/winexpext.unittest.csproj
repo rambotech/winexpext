@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -8,6 +8,7 @@
     <IsPackable>false</IsPackable>
 		<Version>1.5.0</Version>
 		<AssemblyVersion>1.5.0.0</AssemblyVersion>
+		<Platforms>AnyCPU</Platforms>
 	</PropertyGroup>
 
   <ItemGroup>

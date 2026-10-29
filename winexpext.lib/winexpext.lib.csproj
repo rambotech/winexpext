@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
 		<Version>1.5.0</Version>
 		<AssemblyVersion>1.5.0.0</AssemblyVersion>
+		<Platforms>AnyCPU</Platforms>
+		<SelfContained>true</SelfContained>
 	</PropertyGroup>
 
   <ItemGroup>
